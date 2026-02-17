@@ -1,6 +1,6 @@
 import Order from '../../models/order.js';
 import Branch from '../../models/branch.js';
-import {Customer, DeiveryPartner } from '../../models/user.js'; 
+import {Customer, DeliveryPartner } from '../../models/user.js'; 
 
 export const createOrder = async (req, reply) => {
     try {
@@ -50,17 +50,17 @@ export const confirmOrder = async (req, reply) => {
         const {userId} = req.user;
         const {deliveryPersonLocation} = req.body;
 
-        const deliveryPerson = await DeiveryPartner.findById(userId); 
+        const deliveryPerson = await DeliveryPartner.findById(userId); 
 
         if(!deliveryPerson) {
             return reply.status(404).send({ message: 'Delivery partner not found.' });
         }
         
-        const oreder = await Order.findById(orderId);
-        if(!oreder) {
+        const order = await Order.findById(orderId);
+        if(!order) {
             return reply.status(404).send({ message: 'Order not found.' });
         }
-        if(oreder.status !== 'available') {
+        if(order.status !== 'available') {
             return reply.status(400).send({ message: 'Order is not available' });
         }
         order.status = 'confirmed';
