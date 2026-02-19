@@ -24,8 +24,8 @@ const start = async () => {
 
   await buildAdminRouter(app);
 
-  app.get("/health", (req, res) => {
-    res.json({ status: "ok", message: "Server is running" });
+  app.get("/health", (req, reply) => {
+    reply.send({ status: "ok", message: "Server is running" });
   });
 
   io.on("connection", (socket) => {
